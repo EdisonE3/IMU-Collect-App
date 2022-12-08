@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import com.wireless.spyapp.databinding.ActivityMainBinding
 import com.wireless.spyapp.imu.Data
 import java.util.*
 
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     // an ArrayList of Floats to store the orientation values
     private var mOrientationValues: ArrayList<Data>? = null
 
+    private lateinit var binding: ActivityMainBinding
+
     private var timer: Timer? = null
 
     private var startTime : Long = 0
@@ -50,6 +54,14 @@ class MainActivity : AppCompatActivity() {
         mMagneticFieldValues = ArrayList()
         mGyroscopeValues = ArrayList()
         mOrientationValues = ArrayList()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        binding.fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
     }
 
     override fun onResume() {
