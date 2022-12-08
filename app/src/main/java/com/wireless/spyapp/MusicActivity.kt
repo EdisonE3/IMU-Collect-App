@@ -1,6 +1,7 @@
 package com.wireless.spyapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -27,22 +28,28 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         val mediaPlayer = musicManager?.mediaPlayer!!
         when (v!!.id) {
-            R.id.btnPlay ->
+            R.id.btnPlay -> {
+                Log.d("MusicActivity", "play")
                 //如果没在播放中，立刻开始播放。
                 if (!mediaPlayer.isPlaying()) {
                     mediaPlayer.start()
                 }
-            R.id.btnPause ->         //如果在播放中，立刻暂停。
+            }
+            R.id.btnPause -> {
+                //如果在播放中，立刻暂停。
+                Log.d("MusicActivity", "pause")
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause()
                 }
-            R.id.btnStop ->         //如果在播放中，立刻停止。
+            }
+            R.id.btnStop -> {
+                //如果在播放中，立刻停止。
+                Log.d("MusicActivity", "stop")
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.reset()
                     musicManager?.initMediaPlayer() //初始化播放器 MediaPlayer
                 }
-            R.id.btnBack ->         //如果在播放中，立刻停止。
-                finish()
+            }
             else -> {}
         }
     }

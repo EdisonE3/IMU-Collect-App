@@ -57,10 +57,9 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        binding.fab.setOnClickListener { view ->
-            {
-
+        binding.fab.setOnClickListener {
+            run {
+                changeActivity()
             }
         }
     }

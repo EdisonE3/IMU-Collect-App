@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MusicActivity">
-    <Button
-            android:id="@+id/btnPlay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="@string/play" tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="87dp"
-            tools:layout_editor_absoluteX="0dp"/>
-    <Button
-            android:id="@+id/btnPause"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="@string/pause" tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="227dp"
-            tools:layout_editor_absoluteX="0dp"/>
-    <Button
-            android:id="@+id/btnStop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="@string/stop" tools:layout_editor_absoluteY="351dp" tools:layout_editor_absoluteX="-16dp"
-            tools:ignore="MissingConstraints"/>
-
-    <Button
-            android:id="@+id/btnBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="@string/back" tools:layout_editor_absoluteY="475dp" tools:layout_editor_absoluteX="0dp"
-            tools:ignore="MissingConstraints"/>
-
+    <LinearLayout android:layout_width="412dp" android:layout_height="439dp"
+                  android:orientation="vertical" tools:ignore="MissingConstraints">
+        <Button
+                android:id="@+id/btnPlay"
+                android:layout_width="match_parent"
+                android:layout_height="107dp"
+                android:textAllCaps="false"
+                android:text="@string/play"
+                tools:ignore="MissingConstraints"
+        />
+        <Button
+                android:id="@+id/btnStop"
+                android:layout_width="129dp"
+                android:layout_height="102dp"
+                android:textAllCaps="false"
+                android:text="@string/stop"
+                tools:ignore="MissingConstraints"
+        />
+        <Button
+                android:id="@+id/btnPause"
+                android:layout_width="337dp"
+                android:layout_height="86dp"
+                android:textAllCaps="false"
+                android:text="@string/pause"
+                tools:ignore="MissingConstraints"
+        />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
