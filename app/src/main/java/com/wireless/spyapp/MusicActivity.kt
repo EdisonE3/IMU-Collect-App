@@ -41,6 +41,8 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
                     mediaPlayer.reset()
                     musicManager?.initMediaPlayer() //初始化播放器 MediaPlayer
                 }
+            R.id.btnBack ->         //如果在播放中，立刻停止。
+                finish()
             else -> {}
         }
     }

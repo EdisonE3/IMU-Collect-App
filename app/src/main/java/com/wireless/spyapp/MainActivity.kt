@@ -1,5 +1,6 @@
 package com.wireless.spyapp
 
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -8,7 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import com.wireless.spyapp.databinding.ActivityMainBinding
 import com.wireless.spyapp.imu.Data
 import java.util.*
@@ -59,8 +59,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            {
+
+            }
         }
     }
 
@@ -171,5 +172,11 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "-----------------------------------------")
 
         }
+    }
+
+    private fun changeActivity(){
+        val intent = Intent()
+        intent.setClass(this@MainActivity, MusicActivity::class.java)
+        startActivity(intent)
     }
 }
