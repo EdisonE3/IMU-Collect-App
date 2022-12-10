@@ -1,5 +1,6 @@
 package com.wireless.spyapp
 
+import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.wireless.spyapp.databinding.ActivityMainBinding
 import com.wireless.spyapp.imu.Data
+import com.wireless.spyapp.util.FileManager
 import java.util.*
 
 
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     private var startTime : Long = 0
     private var currentTime : Long = 0
 
+    private var fileManager: FileManager? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -54,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         mMagneticFieldValues = ArrayList()
         mGyroscopeValues = ArrayList()
         mOrientationValues = ArrayList()
+
+        fileManager = FileManager()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -165,7 +171,11 @@ class MainActivity : AppCompatActivity() {
 
             Log.d(TAG, "-----------------------------------------")
             for (it in mAccelerometerValues!!){
+                val data = it.x.toString() + "," + it.y.toString() + "," + it.z.toString()
+                Log.d("path", applicationContext.filesDir.toString())
+                fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), "accelerometer.txt")
                 Log.d(TAG, it.id.toString() + " accelerometer: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
+
             }
             mAccelerometerValues?.clear()
             Log.d(TAG, "-----------------------------------------")
