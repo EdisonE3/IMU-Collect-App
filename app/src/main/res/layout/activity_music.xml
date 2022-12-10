@@ -5,11 +5,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MusicActivity">
-    <LinearLayout android:layout_width="412dp" android:layout_height="439dp"
-                  android:orientation="vertical" tools:ignore="MissingConstraints">
+    <LinearLayout android:layout_width="408dp" android:layout_height="823dp"
+                  android:orientation="vertical" tools:ignore="MissingConstraints" tools:layout_editor_absoluteX="0dp">
         <Button
                 android:id="@+id/btnPlay"
-                android:layout_width="match_parent"
+                android:layout_width="366dp"
                 android:layout_height="107dp"
                 android:textAllCaps="false"
                 android:text="@string/play"
@@ -17,12 +17,12 @@
         />
         <Button
                 android:id="@+id/btnStop"
-                android:layout_width="129dp"
+                android:layout_width="348dp"
                 android:layout_height="102dp"
                 android:textAllCaps="false"
                 android:text="@string/stop"
                 tools:ignore="MissingConstraints"
-        />
+                android:layout_marginVertical="100dp"/>
         <Button
                 android:id="@+id/btnPause"
                 android:layout_width="337dp"
@@ -30,6 +30,6 @@
                 android:textAllCaps="false"
                 android:text="@string/pause"
                 tools:ignore="MissingConstraints"
-        />
+                android:layout_marginHorizontal="0dp" android:layout_marginVertical="60dp"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

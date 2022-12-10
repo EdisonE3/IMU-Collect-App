@@ -15,7 +15,8 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_music)
-        musicManager = MusicManager()
+        musicManager = MusicManager(this, R.raw.test)
+
         val btnPlay: Button = findViewById<View>(R.id.btnPlay) as Button
         val btnPause: Button = findViewById<View>(R.id.btnPause) as Button
         val btnStop: Button = findViewById<View>(R.id.btnStop) as Button
@@ -30,6 +31,7 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
         when (v!!.id) {
             R.id.btnPlay -> {
                 Log.d("MusicActivity", "play")
+                musicManager?.setStart()
                 //如果没在播放中，立刻开始播放。
                 if (!mediaPlayer.isPlaying()) {
                     mediaPlayer.start()
@@ -37,7 +39,8 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btnPause -> {
                 //如果在播放中，立刻暂停。
-                Log.d("MusicActivity", "pause")
+                Log.d("MusicActivity", "pause11")
+                musicManager?.setPause()
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause()
                 }
@@ -47,7 +50,7 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
                 Log.d("MusicActivity", "stop")
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.reset()
-                    musicManager?.initMediaPlayer() //初始化播放器 MediaPlayer
+                    musicManager?.initMediaPlayer(this, R.raw.test) //初始化播放器 MediaPlayer
                 }
             }
             else -> {}

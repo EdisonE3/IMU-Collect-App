@@ -1,33 +1,28 @@
 package com.wireless.spyapp.util
 
 import android.content.Context
-import android.media.AudioManager
 import android.media.MediaPlayer
-import android.os.Environment
-import java.io.File
-import java.io.IOException
 
 
-class MusicManager {
-    // this class is used to play and pause music
-    // It can be used to play music in the background
-    // the music can be load from sdcard
-    var mediaPlayer: MediaPlayer? = null
+class MusicManager// construction method with two parameter
+    (context: Context, resId: Int) {
+    var mediaPlayer :MediaPlayer? = null
+    private var isPause = false //是否暂停
 
-    // construct function
     init {
-        this.mediaPlayer = MediaPlayer()
-        initMediaPlayer()
+        initMediaPlayer(context, resId)
     }
 
-    fun initMediaPlayer() {
-        try {
-            val filePath = ""
-            mediaPlayer?.setDataSource(filePath)
-            mediaPlayer!!.isLooping = true //设置为循环播放
-            mediaPlayer!!.prepare() //初始化播放器MediaPlayer
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    fun initMediaPlayer(context: Context, resId: Int) {
+        mediaPlayer = MediaPlayer.create(context, resId)
+        mediaPlayer?.setLooping(true)
+    }
+
+    fun setPause() {
+        isPause = true
+    }
+
+    fun setStart() {
+        isPause = false
     }
 }

@@ -172,9 +172,9 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "-----------------------------------------")
             for (it in mAccelerometerValues!!){
                 val data = it.x.toString() + "," + it.y.toString() + "," + it.z.toString()
-                Log.d("path", applicationContext.filesDir.toString())
+//                Log.d("path", applicationContext.filesDir.toString())
                 fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), "accelerometer.txt")
-                Log.d(TAG, it.id.toString() + " accelerometer: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
+//                Log.d(TAG, it.id.toString() + " accelerometer: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
 
             }
             mAccelerometerValues?.clear()
