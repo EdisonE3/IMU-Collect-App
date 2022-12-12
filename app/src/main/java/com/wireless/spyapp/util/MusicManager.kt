@@ -1,6 +1,7 @@
 package com.wireless.spyapp.util
 
 import android.content.Context
+import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
 import android.os.SystemClock.sleep
@@ -8,14 +9,14 @@ import android.util.Log
 
 
 class MusicManager// construction method with two parameter
-    (context: Context, resId: Int) {
+    (context: Context, musicList: ArrayList<Int>) {
     var mMediaPlayer: MediaPlayer? = null
-    var currentMusicId = 0
     var mContext: Context? = null
-    var mResId = 0
-    var isInit = false
+
     // A list used to store all music id
     var musicList: MutableList<Int> = ArrayList()
+    // The music currently played
+    private var musicListIndex = 0
 
     // implement static variable in kotlin
     companion object {
@@ -28,26 +29,33 @@ class MusicManager// construction method with two parameter
     }
 
     init {
-        initMediaPlayer(context, resId)
+        this.mMediaPlayer = MediaPlayer.create(context, musicList[0])
+        this.mContext = context
+        this.musicList = musicList
+        this.musicListIndex = 1
+        initMediaPlayer()
     }
 
-    fun initMediaPlayer(context: Context, resId: Int) {
-        if (!isInit){
-            mMediaPlayer = MediaPlayer.create(context, resId)
-            mContext = context
-            mResId = resId
-            Log.d("MusicManager", "init")
-            isInit = true
-            mMediaPlayer?.setLooping(false) //设置循环播放
-            mMediaPlayer?.setOnCompletionListener(OnCompletionListener {
-                Log.d("tag", "播放完毕" + count)
-//                count++
-                isPause = true
-//                sleep(200)
-//                this.initMediaPlayer(mContext!!, mResId)
-//                isPause = false
-            })
-        }
+    private fun initMediaPlayer() {
+        Log.d("MusicManager", "set music manager states")
+        mMediaPlayer?.isLooping = false //设置循环播放
+        mMediaPlayer?.setOnCompletionListener(OnCompletionListener {
+            Log.d("tag", "播放完毕$count")
+
+            // 播放完了先暫停
+            isPause = true
+
+            // 休息几秒钟
+            sleep(1000)
+
+            // 播放下一首
+            if (musicListIndex < musicList.size) {
+                setAndStartNextMusic(musicList[musicListIndex])
+                isPause = false
+                musicListIndex++
+                count++
+            }
+        })
     }
 
     fun setPause() {
@@ -57,5 +65,13 @@ class MusicManager// construction method with two parameter
     fun setStart() {
         isPause = false
         count++
+    }
+
+    private fun setAndStartNextMusic(musicId:Int) {
+        Log.d("MusicManager", "start new music: $musicId")
+        val afd: AssetFileDescriptor? = mContext?.resources?.openRawResourceFd(musicId)
+        mMediaPlayer?.setDataSource(afd!!)
+        mMediaPlayer?.prepare()
+        mMediaPlayer?.start()
     }
 }

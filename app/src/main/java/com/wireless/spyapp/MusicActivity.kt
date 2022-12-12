@@ -15,7 +15,10 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_music)
-        musicManager = MusicManager(this, R.raw.test)
+
+        val list: ArrayList<Int> = ArrayList()
+        list.add(R.raw.test)
+        musicManager = MusicManager(this, list)
 
         val btnPlay: Button = findViewById<View>(R.id.btnPlay) as Button
         val btnPause: Button = findViewById<View>(R.id.btnPause) as Button
@@ -51,7 +54,6 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
                 musicManager?.setPause()
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.reset()
-                    musicManager?.initMediaPlayer(this, R.raw.test) //初始化播放器 MediaPlayer
                 }
             }
             else -> {}
