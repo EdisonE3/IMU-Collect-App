@@ -46,7 +46,8 @@ class FileManager {
         var file: File? = null
         makeRootDirectory(filePath)
         try {
-            file = File(filePath + fileName)
+            file = File("$filePath/$fileName")
+            Log.d("TestFile", "Create the file:$filePath/$fileName")
             if (!file.exists()) {
                 file.createNewFile()
             }
