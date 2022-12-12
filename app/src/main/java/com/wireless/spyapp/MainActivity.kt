@@ -89,14 +89,22 @@ class MainActivity : AppCompatActivity() {
         val magneticSensor = mSensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
         if (magneticSensor != null) {
             //register magnetic sensor listener
-            mSensorManager!!.registerListener(mMySensorEventListener, magneticSensor, SensorManager.SENSOR_DELAY_FASTEST)
+            mSensorManager!!.registerListener(
+                mMySensorEventListener,
+                magneticSensor,
+                SensorManager.SENSOR_DELAY_FASTEST
+            )
         } else {
             Log.d(TAG, "Magnetic sensors are not supported on current devices.")
         }
         val gyroscopeSensor = mSensorManager!!.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
         if (gyroscopeSensor != null) {
             //register gyroscope sensor listener
-            mSensorManager!!.registerListener(mMySensorEventListener, gyroscopeSensor, SensorManager.SENSOR_DELAY_FASTEST)
+            mSensorManager!!.registerListener(
+                mMySensorEventListener,
+                gyroscopeSensor,
+                SensorManager.SENSOR_DELAY_FASTEST
+            )
         } else {
             Log.d(TAG, "Gyroscope sensors are not supported on current devices.")
         }
@@ -173,7 +181,11 @@ class MainActivity : AppCompatActivity() {
 //                    "gyroscope data[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]"
 //                )
                 mGyroscopeSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
-//                mGyroscopeValues?.add(Data(event.values[0], event.values[1], event.values[2]))
+                mGyroscopeValues?.add(Data(
+                    System.nanoTime(),
+                    event.values[0],
+                    event.values[1],
+                    event.values[2]))
             }
             calculateOrientation()
         }
@@ -187,16 +199,26 @@ class MainActivity : AppCompatActivity() {
                 return
             }
 
-            Log.d(TAG, "-----------------------------------------")
+            Log.d(TAG, "-----------------record accelerometer------------------------")
             for (it in mAccelerometerValues!!){
-                val data = it.x.toString() + "," + it.y.toString() + "," + it.z.toString()
+                val data = it.toString()
 //                Log.d("path", applicationContext.filesDir.toString())
-                fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), MusicManager.fileName)
+                fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), "acc"+MusicManager.fileName)
 //                Log.d(TAG, it.id.toString() + " accelerometer: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
 
             }
             mAccelerometerValues?.clear()
-            Log.d(TAG, "-----------------------------------------")
+
+            Log.d(TAG, "-----------------record gyroscope------------------------")
+            for (it in mGyroscopeValues!!){
+                val data = it.toString()
+//                Log.d("path", applicationContext.filesDir.toString())
+                fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), "gyr"+MusicManager.fileName)
+//                Log.d(TAG, it.id.toString() + " gyroscope: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
+            }
+
+
+            Log.d(TAG, "----------------end-------------------------")
 
         }
     }

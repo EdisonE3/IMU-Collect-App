@@ -27,7 +27,7 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        val mediaPlayer = musicManager?.mediaPlayer!!
+        val mediaPlayer = musicManager?.mMediaPlayer!!
         when (v!!.id) {
             R.id.btnPlay -> {
                 Log.d("MusicActivity", "play")

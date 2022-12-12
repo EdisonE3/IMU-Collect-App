@@ -1,5 +1,8 @@
 package com.wireless.spyapp.imu;
 
+import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
+
 public class Data {
     public static long totalId = 0;
     public long time;
@@ -15,5 +18,12 @@ public class Data {
         this.z = z;
         this.id = totalId;
         totalId++;
+    }
+
+    @NonNull
+    @NotNull
+    @Override
+    public String toString() {
+        return time + "," + x + "," + y + "," + z;
     }
 }
