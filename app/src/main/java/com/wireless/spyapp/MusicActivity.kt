@@ -48,6 +48,7 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btnStop -> {
                 //如果在播放中，立刻停止。
                 Log.d("MusicActivity", "stop")
+                musicManager?.setPause()
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.reset()
                     musicManager?.initMediaPlayer(this, R.raw.test) //初始化播放器 MediaPlayer

@@ -1,6 +1,5 @@
 package com.wireless.spyapp
 
-import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.wireless.spyapp.databinding.ActivityMainBinding
 import com.wireless.spyapp.imu.Data
 import com.wireless.spyapp.util.FileManager
+import com.wireless.spyapp.util.MusicManager
 import java.util.*
 
 
@@ -136,6 +136,14 @@ class MainActivity : AppCompatActivity() {
                 startTime = System.currentTimeMillis()
             }
 
+            // 没有播放的时候就不要记录
+            if (MusicManager.isPause){
+                listData()
+                Log.d(TAG, "onSensorChanged: 没有播放的时候就不要记录")
+                return
+            }
+
+
             if (event.sensor.type === Sensor.TYPE_ACCELEROMETER) {
                 mAccelerometerReading = event.values
 //                Log.d(
@@ -143,7 +151,14 @@ class MainActivity : AppCompatActivity() {
 //                    "accelerometer data[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]"
 //                )
                 mAccelerometerSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
-                mAccelerometerValues?.add(Data(event.values[0], event.values[1], event.values[2]))
+                mAccelerometerValues?.add(
+                    Data(
+                        System.nanoTime(),
+                        event.values[0],
+                        event.values[1],
+                        event.values[2]
+                    )
+                )
             } else if (event.sensor.type === Sensor.TYPE_MAGNETIC_FIELD) {
                 mMagneticFieldReading = event.values
 //                Log.d(
@@ -168,12 +183,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         private fun listData(){
+            if (mAccelerometerValues != null && mAccelerometerValues!!.size == 0){
+                return
+            }
 
             Log.d(TAG, "-----------------------------------------")
             for (it in mAccelerometerValues!!){
                 val data = it.x.toString() + "," + it.y.toString() + "," + it.z.toString()
 //                Log.d("path", applicationContext.filesDir.toString())
-                fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), "accelerometer.txt")
+                fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), MusicManager.fileName)
 //                Log.d(TAG, it.id.toString() + " accelerometer: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
 
             }
