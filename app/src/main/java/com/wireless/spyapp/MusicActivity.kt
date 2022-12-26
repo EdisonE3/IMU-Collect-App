@@ -34,31 +34,32 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        val mediaPlayer = musicManager?.mMediaPlayer!!
         when (v!!.id) {
             R.id.btnPlay -> {
                 Log.d("MusicActivity", "play")
-                musicManager?.setStart()
-                //如果没在播放中，立刻开始播放。
-                if (!mediaPlayer.isPlaying()) {
-                    mediaPlayer.start()
-                }
+                musicManager?.startMusic()
+//                //如果没在播放中，立刻开始播放。
+//                if (!mediaPlayer.isPlaying()) {
+//                    mediaPlayer.start()
+//                }
             }
             R.id.btnPause -> {
                 //如果在播放中，立刻暂停。
-                Log.d("MusicActivity", "pause11")
-                musicManager?.setPause()
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause()
-                }
+                Log.d("MusicActivity", "pause")
+                musicManager?.pauseMusic()
+//                musicManager?.setPause()
+//                if (mediaPlayer.isPlaying()) {
+//                    mediaPlayer.pause()
+//                }
             }
             R.id.btnStop -> {
                 //如果在播放中，立刻停止。
                 Log.d("MusicActivity", "stop")
-                musicManager?.setPause()
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.reset()
-                }
+                musicManager?.stopMusic()
+//                musicManager?.setPause()
+//                if (mediaPlayer.isPlaying()) {
+//                    mediaPlayer.reset()
+//                }
             }
             else -> {}
         }
