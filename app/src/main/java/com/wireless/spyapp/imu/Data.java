@@ -3,6 +3,8 @@ package com.wireless.spyapp.imu;
 import androidx.annotation.NonNull;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+
 public class Data {
     public static long totalId = 0;
     public long time;
@@ -24,6 +26,8 @@ public class Data {
     @NotNull
     @Override
     public String toString() {
-        return time + "," + x + "," + y + "," + z;
+        return time + "," + new BigDecimal(Double.toString(x)).toPlainString() + "," +
+                new BigDecimal(Double.toString(y)).toPlainString() + "," +
+                new BigDecimal(Double.toString(z)).toPlainString();
     }
 }
