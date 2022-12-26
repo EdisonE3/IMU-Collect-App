@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
     private inner class MySensorEventListener : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
             currentTime = System.currentTimeMillis()
-            if (currentTime - startTime >= 10*1000){
+            if (currentTime - startTime >= 10){
                 listData()
                 startTime = System.currentTimeMillis()
             }
@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity() {
                 return
             }
 
-            Log.d(TAG, "-----------------record accelerometer------------------------")
+//            Log.d(TAG, "-----------------record accelerometer------------------------")
             for (it in mAccelerometerValues!!){
                 val data = it.toString()
 //                Log.d("path", applicationContext.filesDir.toString())
@@ -209,7 +209,7 @@ class MainActivity : AppCompatActivity() {
             }
             mAccelerometerValues?.clear()
 
-            Log.d(TAG, "-----------------record gyroscope------------------------")
+//            Log.d(TAG, "-----------------record gyroscope------------------------")
             for (it in mGyroscopeValues!!){
                 val data = it.toString()
 //                Log.d("path", applicationContext.filesDir.toString())
@@ -218,7 +218,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            Log.d(TAG, "----------------end-------------------------")
+//            Log.d(TAG, "----------------end-------------------------")
 
         }
     }

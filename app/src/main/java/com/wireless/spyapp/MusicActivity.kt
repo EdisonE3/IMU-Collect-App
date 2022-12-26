@@ -17,7 +17,11 @@ class MusicActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_music)
 
         val list: ArrayList<Int> = ArrayList()
-        list.add(R.raw.test)
+        list.add(R.raw.t0_01_0)
+        list.add(R.raw.t0_01_1)
+        list.add(R.raw.t0_01_10)
+        list.add(R.raw.t0_01_11)
+        list.add(R.raw.t0_01_12)
         musicManager = MusicManager(this, list)
 
         val btnPlay: Button = findViewById<View>(R.id.btnPlay) as Button

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
+import android.net.Uri
 import android.os.SystemClock.sleep
 import android.util.Log
 
@@ -46,14 +47,20 @@ class MusicManager// construction method with two parameter
             isPause = true
 
             // 休息几秒钟
-            sleep(1000)
+            sleep(2000)
 
             // 播放下一首
             if (musicListIndex < musicList.size) {
-                setAndStartNextMusic(musicList[musicListIndex])
-                isPause = false
+                Log.d("MusicManager", "start new music: $musicListIndex")
+                // 初始化一个MediaPlayer
+                mMediaPlayer = MediaPlayer.create(mContext, musicList[musicListIndex])
+                // 设置该MediaPlayer的监听器
+                initMediaPlayer()
+                // 开始播放
+                mMediaPlayer?.start()
                 musicListIndex++
                 count++
+                isPause = false
             }
         })
     }
@@ -68,9 +75,9 @@ class MusicManager// construction method with two parameter
     }
 
     private fun setAndStartNextMusic(musicId:Int) {
-        Log.d("MusicManager", "start new music: $musicId")
-        val afd: AssetFileDescriptor? = mContext?.resources?.openRawResourceFd(musicId)
-        mMediaPlayer?.setDataSource(afd!!)
+        val afd: AssetFileDescriptor = mContext?.resources?.openRawResourceFd(musicId)!!
+        Log.d("MusicManager", "afd: ${afd.toString()}")
+        mContext?.let { mMediaPlayer?.setDataSource(afd) }
         mMediaPlayer?.prepare()
         mMediaPlayer?.start()
     }

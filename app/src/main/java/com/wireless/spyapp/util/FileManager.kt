@@ -28,7 +28,6 @@ class FileManager {
         try {
             val file = File(strFilePath)
             if (!file.exists()) {
-                Log.d("TestFile", "Create the file:$strFilePath")
                 file.getParentFile()?.mkdirs()
                 file.createNewFile()
             }
@@ -47,9 +46,11 @@ class FileManager {
         makeRootDirectory(filePath)
         try {
             file = File("$filePath/$fileName")
-            Log.d("TestFile", "Create the file:$filePath/$fileName")
+
             if (!file.exists()) {
-                file.createNewFile()
+                var result = file.createNewFile()
+                Log.d("TestFile", "Create the file:$filePath/$fileName")
+                Log.d("TestFile", "Result of creating the file:$result")
             }
         } catch (e: Exception) {
             e.printStackTrace()
