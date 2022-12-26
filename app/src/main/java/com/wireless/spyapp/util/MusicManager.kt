@@ -24,7 +24,7 @@ class MusicManager// construction method with two parameter
         var isPause = true //是否暂停
         var fileName = "" //文件名
             get() {
-                return "$field$count.txt"
+                return "zero.txt"
             }
         var count = 0 //计数
     }
@@ -35,6 +35,7 @@ class MusicManager// construction method with two parameter
         for (i in musicList.indices) {
             Log.d("MusicManager", "init media player: $i")
             val mediaPlayer = MediaPlayer.create(context, musicList[i])
+            mediaPlayer.isLooping = false
             mediaPlayerList.add(mediaPlayer)
         }
     }
@@ -66,38 +67,39 @@ class MusicManager// construction method with two parameter
         Log.d("MusicManager", "stop music")
         mCurrentMediaPlayer?.stop()
         isPause = true
+        isStart = false
     }
 
     private fun startFromZero() {
-        nextMusicListIndex = 0
-        count = 0
-        Log.d("tag", "开始播放$count 当前:$count 下一首:$nextMusicListIndex")
-        mCurrentMediaPlayer = mediaPlayerList[nextMusicListIndex]
-        mCurrentMediaPlayer?.start()
-        mCurrentMediaPlayer?.setOnCompletionListener(OnCompletionListener {
-            // 播放完了，count++
-            Log.d("tag", "播放完毕$count 当前:$count 下一首:$nextMusicListIndex")
-            count++
+        // launch a new thread to start music
+        var thread = Thread(Runnable {
+            isPause = false
+            isStart = true
+            Log.d("MusicManager", "start music from zero, isPause: $isPause, isStart: $isStart")
+            nextMusicListIndex = 0
+            count = 0
+            while (nextMusicListIndex < mediaPlayerList.size && !isPause && isStart) {
+                sleep(200)
+                Log.d("tag", "开始播放$count 当前:$count 下一首:$nextMusicListIndex size:${mediaPlayerList.size}")
+                mCurrentMediaPlayer = mediaPlayerList[nextMusicListIndex++]
+                mCurrentMediaPlayer?.start()
+                while (mCurrentMediaPlayer?.isPlaying == true){
+                    if (isPause){
+                        break
+                    }
 
-            // 播放完了先暫停
-            isPause = true
-
-            // 休息几秒钟
-            sleep(2000)
-
-            // 播放下一首
-            if (nextMusicListIndex < mediaPlayerList.size) {
-                Log.d("MusicManager", "start new music: $nextMusicListIndex")
-                if (nextMusicListIndex < mediaPlayerList.size - 1) {
-                    // 初始化一个MediaPlayer
-                    mCurrentMediaPlayer = mediaPlayerList[nextMusicListIndex]
-                    // 开始播放
-                    mCurrentMediaPlayer?.start()
-                    nextMusicListIndex++
-                    isPause = false
+                    if (!isStart){
+                        break
+                    }
                 }
+                mCurrentMediaPlayer?.stop()
+                mCurrentMediaPlayer?.release()
+                Log.d("tag", "播放结束$count 当前:$count 下一首:$nextMusicListIndex size:${mediaPlayerList.size}")
             }
+            Log.d("MusicManager", "all music complete")
+            isPause = true
+            isStart = false
         })
-        nextMusicListIndex++
+        thread.start()
     }
 }

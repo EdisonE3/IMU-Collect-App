@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity() {
             // 没有播放的时候就不要记录
             if (MusicManager.isPause){
                 listData()
-                Log.d(TAG, "onSensorChanged: 没有播放的时候就不要记录")
+//                Log.d(TAG, "onSensorChanged: 没有播放的时候就不要记录")
                 return
             }
 
@@ -158,7 +158,10 @@ class MainActivity : AppCompatActivity() {
 //                    TAG,
 //                    "accelerometer data[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]"
 //                )
-                mAccelerometerSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
+                if (MusicManager.isPause || !MusicManager.isStart){
+                    Log.d("MainActivity", "TYPE_ACCELEROMETER onSensorChanged: 没有播放的时候就不要记录!!!!!")
+                }
+//                mAccelerometerSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
                 mAccelerometerValues?.add(
                     Data(
                         System.nanoTime(),
@@ -173,21 +176,24 @@ class MainActivity : AppCompatActivity() {
 //                    TAG,
 //                    "magnetic data[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]"
 //                )
-                mMagneticSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
+//                mMagneticSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
 //                mMagneticFieldValues?.add(Data(event.values[0], event.values[1], event.values[2]))
             } else if (event.sensor.type === Sensor.TYPE_GYROSCOPE) {
 //                Log.d(
 //                    TAG,
 //                    "gyroscope data[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]"
 //                )
-                mGyroscopeSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
+//                mGyroscopeSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
+                if (MusicManager.isPause || !MusicManager.isStart){
+                    Log.d("MainActivity", "TYPE_ACCELEROMETER onSensorChanged: 没有播放的时候就不要记录!!!!!")
+                }
                 mGyroscopeValues?.add(Data(
                     System.nanoTime(),
                     event.values[0],
                     event.values[1],
                     event.values[2]))
             }
-            calculateOrientation()
+//            calculateOrientation()
         }
 
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
