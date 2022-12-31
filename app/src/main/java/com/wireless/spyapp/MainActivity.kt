@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity() {
                 fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), "gyr"+MusicManager.fileName)
 //                Log.d(TAG, it.id.toString() + " gyroscope: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
             }
-
+            mGyroscopeValues?.clear()
 
 //            Log.d(TAG, "----------------end-------------------------")
 
