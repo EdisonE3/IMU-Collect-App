@@ -19,6 +19,7 @@ class FileManager {
     fun writeTxtToFile(strcontent: String, filePath: String, fileName: String) {
         //生成文件夹之后，再生成文件，不然会出错
         makeFilePath(filePath, fileName)
+        Log.d("FileManager", "writeTxtToFile: $filePath/$fileName")
         val strFilePath = "$filePath/$fileName"
         // 每次写入时，都换行写
         val strContent = """

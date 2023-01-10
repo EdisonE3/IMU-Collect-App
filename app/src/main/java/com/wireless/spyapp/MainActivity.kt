@@ -209,7 +209,7 @@ class MainActivity : AppCompatActivity() {
             for (it in mAccelerometerValues!!){
                 val data = it.toString()
 //                Log.d("path", applicationContext.filesDir.toString())
-                fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), "acc"+MusicManager.fileName)
+                fileManager?.writeTxtToFile(data, applicationContext.getExternalFilesDir(null)?.path.toString(), "acc"+MusicManager.fileName)
 //                Log.d(TAG, it.id.toString() + " accelerometer: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
 
             }
@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
             for (it in mGyroscopeValues!!){
                 val data = it.toString()
 //                Log.d("path", applicationContext.filesDir.toString())
-                fileManager?.writeTxtToFile(data, applicationContext.filesDir.toString(), "gyr"+MusicManager.fileName)
+                fileManager?.writeTxtToFile(data, applicationContext.getExternalFilesDir(null)?.path.toString(), "gyr"+MusicManager.fileName)
 //                Log.d(TAG, it.id.toString() + " gyroscope: [x:" + it.x + ", y:" + it.y + ", z:" + it.z + "]")
             }
             mGyroscopeValues?.clear()

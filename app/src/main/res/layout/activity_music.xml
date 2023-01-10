@@ -24,11 +24,11 @@
                 tools:ignore="MissingConstraints"
                 android:layout_marginVertical="100dp"/>
         <Button
-                android:id="@+id/btnPause"
+                android:id="@+id/btnTest"
                 android:layout_width="337dp"
                 android:layout_height="86dp"
                 android:textAllCaps="false"
-                android:text="@string/pause"
+                android:text="@string/test"
                 tools:ignore="MissingConstraints"
                 android:layout_marginHorizontal="0dp" android:layout_marginVertical="60dp"/>
     </LinearLayout>
