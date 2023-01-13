@@ -170,14 +170,6 @@ class MainActivity : AppCompatActivity() {
                         event.values[2]
                     )
                 )
-            } else if (event.sensor.type === Sensor.TYPE_MAGNETIC_FIELD) {
-                mMagneticFieldReading = event.values
-//                Log.d(
-//                    TAG,
-//                    "magnetic data[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]"
-//                )
-//                mMagneticSensorTextView?.setText("[x:" + event.values[0] + ", y:" + event.values[1] + ", z:" + event.values[2] + "]")
-//                mMagneticFieldValues?.add(Data(event.values[0], event.values[1], event.values[2]))
             } else if (event.sensor.type === Sensor.TYPE_GYROSCOPE) {
 //                Log.d(
 //                    TAG,

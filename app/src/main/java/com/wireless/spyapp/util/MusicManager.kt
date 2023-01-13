@@ -1,10 +1,10 @@
 package com.wireless.spyapp.util
 
 import android.content.Context
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.SystemClock.sleep
 import android.util.Log
-import kotlin.concurrent.thread
 
 
 class MusicManager// construction method with two parameter
@@ -61,37 +61,63 @@ class MusicManager// construction method with two parameter
     fun testMusic() {
         Log.d("MusicManager", "test music")
         val thread = Thread {
-            currentListCount = 777
-            currentMusicNumber = 777
+            currentListCount = 0
+            sleep(200)
             isPause = false
             isStart = true
 
+            for (_i in 0..9){
+                sleep(2000)
+                // a for loop from 0 to 499
+                val selected = _i
+                currentListCount = 0
+                currentMusicNumber = selected
+                val startIndex = selected * 500
+                val endIndex = startIndex + 500
+                // 1500 1300 1100
+                val duration = 1500L
 
-            val playList = listOf(999, 58, 2009, 3222, 654, 4233)
-            for (i in playList.indices) {
-                Log.d("MusicManager", "test music: $i")
-                mCurrentMediaPlayer = MediaPlayer.create(mContext, mediaPlayerList[playList[i]])
-                mCurrentMediaPlayer?.isLooping = false
-                mCurrentMediaPlayer?.start()
-                while (mCurrentMediaPlayer?.isPlaying == true){
-                    if (isPause){
+                Log.d("MusicManager", "test music, currentMusicNumber: $currentMusicNumber")
+                for (i in startIndex until endIndex) {
+                    if (isPause || !isStart) {
                         break
                     }
 
-                    if (!isStart){
-                        break
+                    if (i % 50 == 0 && i > startIndex) {
+                        isPause = true
+                        isStart = false
+                        sleep(2000)
+                        Log.d("MusicManager", "test music, currentMusicNumber: $currentMusicNumber")
+                        currentListCount++
+                        isPause = false
+                        isStart = true
+                        sleep(2000)
                     }
+
+                    Log.d("MusicManager", "test music: $i")
+                    mCurrentMediaPlayer = MediaPlayer.create(mContext, mediaPlayerList[i])
+                    mCurrentMediaPlayer?.isLooping = false
+                    mCurrentMediaPlayer?.start()
+                    while (mCurrentMediaPlayer?.isPlaying == true){
+                        if (isPause){
+                            break
+                        }
+
+                        if (!isStart){
+                            break
+                        }
+                    }
+                    val sleepTime = duration - mCurrentMediaPlayer!!.duration
+                    mCurrentMediaPlayer?.stop()
+                    mCurrentMediaPlayer?.release()
+                    sleep(sleepTime)
                 }
-                mCurrentMediaPlayer?.stop()
-                mCurrentMediaPlayer?.release()
-                sleep(200)
             }
 
-
+            sleep(2000)
             isPause = true
             isStart = false
-            currentListCount = 0
-            currentMusicNumber = 0
+
         }
         thread.start()
 
@@ -105,36 +131,32 @@ class MusicManager// construction method with two parameter
     }
 
     private fun startFromZero() {
-        // launch a new thread to start music
-        val thread = Thread(Runnable {
-//            currentListCount = 999
-//            currentMusicNumber = 999
-//            isPause = false
-//            isStart = true
-//            sleep(10000)
-//            isPause = true
-//            isStart = false
-//            currentListCount = 0
-//            currentMusicNumber = 0
-
+        Log.d("MusicManager", "test music")
+        // generate a list include 0, 2, 3
+        val thread = Thread {
+            val intArray = intArrayOf(3111, 3108, 3512, 3518, 4255, 4260, 4525, 4530)
+            currentListCount = 10
+            currentMusicNumber = 666
+            sleep(200)
             isPause = false
             isStart = true
-            Log.d("MusicManager", "start music from zero, isPause: $isPause, isStart: $isStart")
-            nextMusicListIndex = 0
-            var currentCount = 0
-            val select_num = 0
-            currentMusicNumber = select_num
-            currentCount = select_num * 500
-            nextMusicListIndex = currentCount
-            val endCount = currentCount + 500 * 5
-            while (nextMusicListIndex < mediaPlayerList.size && !isPause && isStart) {
-                if (currentCount >= endCount) {
+
+            sleep(4000)
+            for (i in intArray){
+                // a for loop from 0 to 499
+                val selected = i
+                val startIndex = selected * 500
+                val endIndex = startIndex + 500
+                // 1500 1300 1100
+                val duration = 1300L
+
+                Log.d("MusicManager", "test music, currentMusicNumber: $currentMusicNumber")
+                if (isPause || !isStart) {
                     break
                 }
 
-                sleep(200)
-                Log.d("tag", "开始播放$currentCount 下一首:$nextMusicListIndex size:${mediaPlayerList.size}")
-                mCurrentMediaPlayer = MediaPlayer.create(mContext, mediaPlayerList[nextMusicListIndex++])
+                Log.d("MusicManager", "test music: $i")
+                mCurrentMediaPlayer = MediaPlayer.create(mContext, mediaPlayerList[i])
                 mCurrentMediaPlayer?.isLooping = false
                 mCurrentMediaPlayer?.start()
                 while (mCurrentMediaPlayer?.isPlaying == true){
@@ -146,35 +168,23 @@ class MusicManager// construction method with two parameter
                         break
                     }
                 }
+                val sleepTime = duration - mCurrentMediaPlayer!!.duration
                 mCurrentMediaPlayer?.stop()
                 mCurrentMediaPlayer?.release()
-                Log.d("tag", "播放结束$currentCount 下一首:$nextMusicListIndex size:${mediaPlayerList.size}")
-
-
-                currentCount++
-                if (currentCount % 500 == 0) {
-                    Log.d("tag", "Stored File Name: $fileName")
-                    isPause = true
-                    sleep(20)
-                    currentListCount = 0
-                    currentMusicNumber++
-                    isPause = false
-                    Log.d("tag", "Stored File Name: $fileName")
-                } else {
-                    Log.d("tag", "Stored File Name: $fileName")
-                    isPause = true
-                    sleep(20)
-                    currentListCount++
-                    isPause = false
-                    Log.d("tag", "Stored File Name: $fileName")
-                }
+                sleep(sleepTime)
             }
-            Log.d("MusicManager", "all music complete")
+
+            sleep(2000)
             isPause = true
             isStart = false
-        })
+
+        }
         thread.start()
-//        thread.join()
+
+        isPause = false
+        isStart = true
+        currentListCount = 10
+        currentMusicNumber = 10
         Log.d("MusicManager", "start music from zero end")
     }
 }
